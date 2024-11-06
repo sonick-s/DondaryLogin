@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dondary App (dondarylogin)
 
 login
@@ -39,3 +40,7 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+=======
+# DondaryLogin
+Login con Quasar y Vue para Crear Usuarios
+>>>>>>> d33e14c9a8723e87ba0c20f7586b92c08ca36a55
