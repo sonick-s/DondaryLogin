@@ -1,9 +1,9 @@
 // Definición de la interfaz
 export interface UserModel {
-  id?: string;
+  id: object;
   name: string;
   lastName: string;
   cedula: string;
   email: string;
-  password: string; 
+  password: string;
 }

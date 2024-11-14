@@ -1,36 +1,51 @@
 import { apiUser } from '../../boot/axios';
+import { UserModel } from '../../models/spgct.models.user';
 
 export class UserService {
   // Contraseña por defecto
-  static defaultPassword = 'spgct2424';
+  static defaultPassword = 'omar123';
+  static data: UserModel | null = null; // Cambié el tipo de `data` a `UserModel | null`
 
   // Método para obtener los datos del usuario desde localStorage
-  static getUserData(): { id?:string; name: string; lastName: string; cedula: string; email: string; password: string } | null {
+  static getUserData(): UserModel | null {
     const storedUser = localStorage.getItem('user');
-    console.log('Datos del usuario desde localStorage 1:', storedUser);
+    console.log('Datos Traidos desde localStorage:', storedUser);
     return storedUser ? JSON.parse(storedUser) : null;
   }
 
-  // Método para realizar un POST a la API solo con los datos que tengan la contraseña por defecto
-  static async postUserDataWithDefaultPassword(): Promise<void> {
-    // Obtiene los datos del usuario desde localStorage
+  // Método para cargar los datos del usuario en la variable `data`
+  static loadUserData(): void {
     const userData = this.getUserData();
-
-    if (!userData) {
-      console.error('No se encontraron datos del usuario.');
-      return;
+    if (userData) {
+      this.data = userData; // Asignamos los datos a la variable `data`
     }
+  }
 
-    // Verifica si la contraseña es la predeterminada antes de hacer el POST
-    if (userData.password === this.defaultPassword) {
-      try {
-        const response = await apiUser.post('User', userData);
-        console.log('Respuesta del POST a la API:', response.data);
-      } catch (error) {
-        console.error('Error al hacer POST a la API:', error);
-      }
-    } else {
-      console.log('La contraseña del usuario no es la predeterminada. No se realizará el POST.');
+  // Método para realizar el POST a la URL de validación
+  static async UserPost(): Promise<void> {
+    // Cargar los datos antes de hacer el POST
+    this.loadUserData();
+
+    // Mostrar los datos estructurados antes de enviarlos
+    console.log('Datos que se enviarán en el POST:', this.data);
+
+    // Asegurarnos de que los datos están en formato JSON (en caso de que no lo estén)
+    const jsonData = this.data ? JSON.stringify(this.data) : null;
+
+    console.log('Datos que se enviarán en el POST json:', jsonData);
+
+    try {
+      // Realizamos el POST con los datos del usuario a la URL de validación
+      const response = await apiUser.post('User', jsonData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // Mostrar la respuesta de la API
+      console.log('Respuesta de la API:', response.data);
+    } catch (error) {
+      console.error('Error al hacer el POST:', error);
     }
   }
 }
