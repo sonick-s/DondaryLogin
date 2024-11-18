@@ -1,6 +1,6 @@
 <template>
+  <h2>Registrarse en la app SPGCT</h2>
   <div class="register-container">
-    <h2>Registrarse en la app SPGCT</h2>
     <form @submit.prevent="register">
       <div class="form-group-inline">
         <div class="form-group">
@@ -50,6 +50,10 @@
 
       <button type="submit">Registrarse</button>
     </form>
+    <!-- Enlace para restablecer la contraseña -->
+    <p class="reset-password-link">
+      <router-link to="/reset-password">Recuperar Contraseña</router-link>
+    </p>
     <div class="image-container">
       <img
         src="/icons/Imagen_Fondo_Resgistro.png"

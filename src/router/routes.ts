@@ -6,9 +6,10 @@ const routes: RouteRecordRaw[] = [
     // component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
+  {
+    path: '/reset-password',
+    component: () => import('pages/resetPassword.vue'),
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
