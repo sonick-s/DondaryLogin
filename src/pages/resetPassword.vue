@@ -14,7 +14,7 @@
       <q-btn
         label="Enviar"
         color="primary"
-        @click="sendResetLink"
+        @click="setlocalStorage"
         class="send-button"
       />
     </div>
@@ -23,17 +23,31 @@
 
 <script setup>
 import { ref } from 'vue';
+import { sendEmail } from '../stores/Backend/email_control';
 
-const email = ref(''); // Variable para el correo electrónico
+const email = ref('');
 
-function sendResetLink() {
-  if (email.value) {
-    // Lógica para enviar enlace de restablecimiento de contraseña
-    console.log(`Enlace enviado a ${email.value}`);
-  } else {
-    console.log('Por favor ingresa un correo electrónico válido.');
+const validateEmail = (email) => {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return emailRegex.test(email);
+};
+
+const setlocalStorage = () => {
+  if (!validateEmail(email.value)) {
+    console.error('El correo electrónico no tiene un formato válido');
+    return;
   }
-}
+  const resetData = {
+    recipientName: 'Usuario',
+    recipientEmail: email.value,
+    subject: 'Restablecer Contraseña',
+    body: 'Codigo de reestablecimiento enviado a email',
+  };
+
+  localStorage.setItem('resetPasswordData', JSON.stringify(resetData));
+  console.log('Datos guardados en localStorage:', resetData);
+  sendEmail();
+};
 </script>
 
 <style scoped>
