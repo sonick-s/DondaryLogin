@@ -3,8 +3,41 @@ import { UserModel } from '../../models/spgct.models.user';
 
 export class UserService {
   // Contraseña por defecto
-  static defaultPassword = 'omar123';
-  static data: UserModel | null = null; // Cambié el tipo de `data` a `UserModel | null`
+  static defaultPassword = '';
+  static data: UserModel | null = null;
+
+  // Método para generar contraseñas seguras
+  static generate() {
+    const length = 20; // Longitud de la contraseña (más larga)
+    const charset =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?/`~-=\\';
+    let password = '';
+
+    // Garantizar que la contraseña incluya al menos un carácter de cada tipo
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    const numbers = '0123456789';
+
+    // Generar al menos un carácter de cada tipo
+    password += uppercase[Math.floor(Math.random() * uppercase.length)];
+    password += lowercase[Math.floor(Math.random() * lowercase.length)];
+    password += numbers[Math.floor(Math.random() * numbers.length)];
+
+    // Completar el resto de la contraseña
+    for (let i = password.length; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      password += charset[randomIndex];
+    }
+
+    // Mezclar los caracteres de la contraseña para que no sigan un patrón
+    password = password
+      .split('')
+      .sort(() => 0.5 - Math.random())
+      .join('');
+
+    this.defaultPassword = password;
+    return this.defaultPassword;
+  }
 
   // Método para obtener los datos del usuario desde localStorage
   static getUserData(): UserModel | null {
@@ -17,32 +50,22 @@ export class UserService {
   static loadUserData(): void {
     const userData = this.getUserData();
     if (userData) {
-      this.data = userData; // Asignamos los datos a la variable `data`
+      this.data = userData;
     }
   }
 
   // Método para realizar el POST a la URL de validación
   static async UserPost(): Promise<void> {
-    // Cargar los datos antes de hacer el POST
     this.loadUserData();
-
-    // Mostrar los datos estructurados antes de enviarlos
     console.log('Datos que se enviarán en el POST:', this.data);
-
-    // Asegurarnos de que los datos están en formato JSON (en caso de que no lo estén)
     const jsonData = this.data ? JSON.stringify(this.data) : null;
-
     console.log('Datos que se enviarán en el POST json:', jsonData);
-
     try {
-      // Realizamos el POST con los datos del usuario a la URL de validación
-      const response = await apiUser.post('User', jsonData, {
+      const response = await apiUser.post('login', jsonData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
-      // Mostrar la respuesta de la API
       console.log('Respuesta de la API:', response.data);
     } catch (error) {
       console.error('Error al hacer el POST:', error);

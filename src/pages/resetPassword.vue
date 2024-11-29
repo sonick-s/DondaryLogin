@@ -38,10 +38,8 @@ const setlocalStorage = () => {
     return;
   }
   const resetData = {
-    recipientName: 'Usuario',
-    recipientEmail: email.value,
-    subject: 'Restablecer Contraseña',
-    body: 'Codigo de reestablecimiento enviado a email',
+    email: email.value,
+    password: '',
   };
 
   localStorage.setItem('resetPasswordData', JSON.stringify(resetData));

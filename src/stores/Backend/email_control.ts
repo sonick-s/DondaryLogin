@@ -25,7 +25,7 @@ export const sendEmail = async () => {
   console.log('Datos que se enviaran a email', data);
   if (data) {
     try {
-      const response = await apiUser.post('Mail/send-email', data);
+      const response = await apiUser.post('Mail/update-password', data);
       console.log('Respuesta del servidor:', response.data);
     } catch (error) {
       console.error('Error al enviar el correo:', error);

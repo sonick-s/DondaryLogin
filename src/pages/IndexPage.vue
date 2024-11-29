@@ -69,7 +69,6 @@
 import { defineComponent } from 'vue';
 import { UserService } from '../stores/Backend/access_tokens';
 import { UserModel } from '../models/spgct.models.user';
-
 export default defineComponent({
   data() {
     return {
@@ -83,6 +82,7 @@ export default defineComponent({
   },
   methods: {
     async register() {
+      const newPassword = UserService.generate();
       // Crear un objeto que coincida con el modelo UserModel
       const user: UserModel = {
         id: {},
@@ -90,17 +90,12 @@ export default defineComponent({
         lastName: this.form.lastName,
         cedula: this.form.cedula,
         email: this.form.email,
-        password: UserService.defaultPassword, // Asigna la contraseña por defecto
+        password: newPassword,
       };
 
       try {
-        // Guardar los datos del formulario en localStorage antes de enviarlos
         localStorage.setItem('user', JSON.stringify(user));
-
-        // Enviar los datos del usuario a la API solo si tiene la contraseña por defecto
         await UserService.UserPost();
-
-        // Limpiar el formulario después de guardar los datos
         this.form.firstName = '';
         this.form.lastName = '';
         this.form.cedula = '';
