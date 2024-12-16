@@ -43,7 +43,6 @@ const setlocalStorage = () => {
   };
 
   localStorage.setItem('resetPasswordData', JSON.stringify(resetData));
-  console.log('Datos guardados en localStorage:', resetData);
   sendEmail();
 };
 </script>

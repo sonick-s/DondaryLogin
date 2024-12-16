@@ -27,6 +27,7 @@ export const sendEmail = async () => {
     try {
       const response = await apiUser.post('Mail/update-password', data);
       console.log('Respuesta del servidor:', response.data);
+      alert('Contraseña recuperada , revise su correo');
     } catch (error) {
       console.error('Error al enviar el correo:', error);
     }
