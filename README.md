@@ -2,6 +2,28 @@
 
 login
 
+# Proyecto Personal
+
+Este archivo describe un proyecto personal. Los detalles del proyecto se pueden personalizar según sea necesario.
+
+## Autor
+
+```
+/////////////////////////////////////////////////////////
+
+   ((())))     ||||    ||||      /|||\       (LL\\\\\\
+  ((((())))    ||| |||| |||     ///  \\\     |||    )))
+ (((      ))   |||  ||  |||    |||\\\\|||    |||\\\\\/
+  ((((())))    |||      |||   |||      |||   |||   \\\
+   (((()))     |||      |||  |||        |||  |||     \\
+
+/////////////////////////////////////////////////////////
+```
+
+**Nombre:** Omar Sani
+
+**LinkedIn:** [Omar Sani](https://www.linkedin.com/in/omar-sani-b9733a2b9/)
+
 ## Install the dependencies
 
 ```bash
